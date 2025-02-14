@@ -25,8 +25,49 @@ Publication generate_publication() {
 }
 
 int compare_publications(const Publication *a, const Publication *b) {
-    return strcmp(a->title, b->title);
+    int comparison;
+
+    // 1. Сравнение по названию публикации
+    comparison = strcmp(a->title, b->title);
+    if (comparison != 0) return comparison;
+
+    // 2. Сравнение по фамилии автора
+    comparison = strcmp(a->first_author_surname, b->first_author_surname);
+    if (comparison != 0) return comparison;
+
+    // 3. Сравнение по инициалам автора
+    comparison = strcmp(a->first_author_initials, b->first_author_initials);
+    if (comparison != 0) return comparison;
+
+    // 4. Сравнение по названию журнала
+    comparison = strcmp(a->journal_name, b->journal_name);
+    if (comparison != 0) return comparison;
+
+    // 5. Сравнение по году публикации
+    if (a->publication_year != b->publication_year) {
+        return (a->publication_year < b->publication_year) ? -1 : 1;
+    }
+
+    // 6. Сравнение по номеру тома журнала
+    if (a->journal_volume != b->journal_volume) {
+        return (a->journal_volume < b->journal_volume) ? -1 : 1;
+    }
+
+    // 7. Сравнение по принадлежности к РИНЦ
+    if (a->is_rints != b->is_rints) {
+        return (a->is_rints < b->is_rints) ? -1 : 1; // false < true
+    }
+
+    // 8. Сравнение по количеству страниц
+    if (a->page_count != b->page_count) {
+        return (a->page_count < b->page_count) ? -1 : 1;
+    }
+
+    // 9. Сравнение по количеству цитирований
+    return (a->citation_count < b->citation_count) ? -1 : 1;
 }
+
+
 
 
 int main(int argc, char *argv[]) {
