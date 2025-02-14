@@ -97,18 +97,15 @@ for (int i = 0; i < stack_size(stack); ++i) {
 }
 
 void print_stack_table(const Stack *stack, FILE *stream) {
-fprintf(stream, "+----------------------------------+-------------------------+----------------------+-------------------------+-------+------+-------+-------+-------+\n");
-fprintf(stream, "| %-33s | %-23s | %-20s | %-23s | %-5s | %-4s | %-5s | %-5s | %-5s |\n",
-        "Title", "First Author Surname", "First Author Initials", "Journal Name", "Year", "Vol", "RINTS", "Pages", "Cites");
-fprintf(stream, "+----------------------------------+-------------------------+----------------------+-------------------------+-------+------+-------+-------+-------+\n");
+    fprintf(stream, "%-35s %-25s %-22s %-25s %-7s %-6s %-7s %-7s %-7s\n",
+            "Title", "First Author Surname", "First Author Initials", "Journal Name", "Year", "Vol", "RINTS", "Pages", "Cites");
 
-for (int i = 0; i < stack_size(stack); ++i) {
-    Publication pub = stack->data[i];
-    fprintf(stream, "| %-33s | %-23s | %-20s | %-23s | %5d | %4d | %-5s | %5d | %5d |\n",
-            pub.title, pub.first_author_surname, pub.first_author_initials, pub.journal_name,
-            pub.publication_year, pub.journal_volume, pub.is_rints ? "YES" : "NO",
-            pub.page_count, pub.citation_count);
+    for (int i = 0; i < stack_size(stack); ++i) {
+        Publication pub = stack->data[i];
+        fprintf(stream, "%-35s %-25s %-22s %-25s %5d %5d %-7s %5d %5d\n",
+                pub.title, pub.first_author_surname, pub.first_author_initials, pub.journal_name,
+                pub.publication_year, pub.journal_volume, pub.is_rints ? "YES" : "NO",
+                pub.page_count, pub.citation_count);
+    }
 }
 
-fprintf(stream, "+----------------------------------+-------------------------+----------------------+-------------------------+-------+------+-------+-------+-------+\n");
-}

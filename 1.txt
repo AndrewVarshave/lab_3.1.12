@@ -1,0 +1,5 @@
+Title,First Author Surname,First Author Initials,Journal Name,Publication Year,Journal Volume,Is RINTS,Page Count,Citation Count
+Title AAAA,Author CCCC,I.I.,Journal ZZZZ,2020,10,YES,100,10
+Title BBBB,Author DDDD,J.J.,Journal YYYY,2021,20,NO,200,20
+Title DDDD,Author BBBB,L.L.,Journal WWWW,2023,40,NO,400,40
+Title CCCC,Author AAAA,K.K.,Journal XXXX,2022,30,YES,300,30
