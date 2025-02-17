@@ -10,17 +10,13 @@ typedef enum {
     MODE_INVALID
 } Mode;
 
-typedef enum {
-    SORT_ASC,
-    SORT_DESC
-} SortType;
 
 typedef struct {
     Mode mode;
     int num_records;
     char *input_file;
     char *output_file;
-    SortType sort_type;
+    bool sort_desc; // Флаг для отслеживания порядка сортировки
 } Args;
 
 void parse_args(int argc, char *argv[], Args *args);

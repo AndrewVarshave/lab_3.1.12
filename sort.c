@@ -2,114 +2,64 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Вспомогательная функция для вставки узла на правильную позицию в отсортированном списке
-void sorted_insert(Stack *stack, Node *newNode, CompareFunc compare) {
-    if (stack->top == NULL || compare(newNode->data, stack->top->data) <= 0) {
-        newNode->next = stack->top;
-        stack->top = newNode;
-    } else {
-        Node *current = stack->top;
-        while (current->next != NULL && compare(newNode->data, current->next->data) > 0) {
-            current = current->next;
+//Вспомогательная функция для получения элемента стека по индексу
+Publication stack_get(const Stack *stack, int index){
+    Node* current = stack->top;
+    int current_index = stack->size - 1;
+
+    while(current != NULL){
+        if(current_index == index){
+            return current->data;
         }
-        newNode->next = current->next;
-        current->next = newNode;
-    }
-}
-
-void gnome_sort(Stack *stack, CompareFunc compare) { // теперь это insertion sort
-    Stack sortedStack;
-    stack_init(&sortedStack);
-
-    Node *current = stack->top;
-    while (current != NULL) {
-        Node *next = current->next; // Сохраняем следующий, потому что current изменится
-        sorted_insert(&sortedStack, current, compare);
-        current = next;
+        current = current->next;
+        current_index--;
     }
 
-    // Обновляем исходный стек отсортированными узлами
-    stack->top = sortedStack.top;
-    stack->size = sortedStack.size;
+    Publication emptyPub = {"", "", "", "", 0, 0, false, 0, 0};
+    return emptyPub;
 }
 
-// Вспомогательная функция для вставки узла на правильную позицию в отсортированном в обратном порядке списке
-void sorted_insert_desc(Stack *stack, Node *newNode, CompareFunc compare) {
-    if (stack->top == NULL || compare(newNode->data, stack->top->data) >= 0) {
-        newNode->next = stack->top;
-        stack->top = newNode;
-    } else {
-        Node *current = stack->top;
-        while (current->next != NULL && compare(newNode->data, current->next->data) < 0) {
-            current = current->next;
-        }
-        newNode->next = current->next;
-        current->next = newNode;
+//Вспомогательная функция для замены элементов стека по индексу
+void stack_swap(Stack *stack, int index1, int index2) {
+    if (index1 < 0 || index1 >= stack->size || index2 < 0 || index2 >= stack->size) {
+        fprintf(stderr, "Error: Index out of bounds in stack_swap.\n");
+        return; // Или можно выйти из программы
     }
-}
-
-void gnome_sort_desc(Stack *stack, CompareFunc compare) { // теперь это insertion sort desc
-     Stack sortedStack;
-    stack_init(&sortedStack);
-
-    Node *current = stack->top;
-    while (current != NULL) {
-        Node *next = current->next; // Сохраняем следующий, потому что current изменится
-        sorted_insert_desc(&sortedStack, current, compare);
-        current = next;
+    
+    Node *node1 = stack->top;
+    int i = stack->size - 1;
+    while (node1 != NULL && i != index1) {
+        node1 = node1->next;
+        i--;
     }
 
-    // Обновляем исходный стек отсортированными узлами
-    stack->top = sortedStack.top;
-    stack->size = sortedStack.size;
-}
-/*#include "sort.h"
-#include <stdio.h>
+    Node *node2 = stack->top;
+    i = stack->size - 1;
+    while (node2 != NULL && i != index2) {
+        node2 = node2->next;
+        i--;
+    }
 
-void swap(Stack *stack, int i, int j) {
-    Publication *data = stack_get_data(stack);
-    Publication temp = data[i];
-    data[i] = data[j];
-    data[j] = temp;
+
+    if(node1 == NULL || node2 == NULL) return; //проверка, а надо ли?
+    Publication tmp = node1->data;
+    node1->data = node2->data;
+    node2->data = tmp;
+
+
 }
 
 
 void gnome_sort(Stack *stack, CompareFunc compare) {
     int size = stack_size(stack);
-    Publication *data = stack_get_data(stack);
-
-    int i = 1;
+    int i = 0;
 
     while (i < size) {
-        if (compare(&data[i], &data[i - 1]) >= 0) {
+        if (i == 0 || compare(stack_get(stack, i), stack_get(stack, i - 1)) >= 0) {
             i++;
         } else {
-            swap(stack, i, i - 1);
-            if (i > 1) {
-                i--;
-            } else {
-                i = 1;
-            }
+            stack_swap(stack, i, i - 1);
+            i--;
         }
     }
 }
-
-void gnome_sort_desc(Stack *stack, CompareFunc compare) {
-      int size = stack_size(stack);
-    Publication *data = stack_get_data(stack);
-
-    int i = 1;
-
-    while (i < size) {
-        if (compare(&data[i], &data[i - 1]) <= 0) {
-            i++;
-        } else {
-            swap(stack, i, i - 1);
-            if (i > 1) {
-                i--;
-            } else {
-                i = 1;
-            }
-        }
-    }
-}*/
