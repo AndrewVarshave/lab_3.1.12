@@ -8,7 +8,7 @@ void parse_args(int argc, char *argv[], Args *args) {
     args->num_records = 0;
     args->input_file = NULL;
     args->output_file = NULL;
-    args->sort_desc = false; // Добавляем флаг для отслеживания порядка сортировки
+    args->sort_desc = false;
 
     for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "--generate") == 0 || strcmp(argv[i], "-g") == 0) {
@@ -77,9 +77,9 @@ void parse_args(int argc, char *argv[], Args *args) {
             }
 
             if (strcmp(type_str, "asc") == 0 || strcmp(type_str, "A") == 0) {
-                args->sort_desc = false; // Сортировка по возрастанию
+                args->sort_desc = false; 
             } else if (strcmp(type_str, "desc") == 0 || strcmp(type_str, "D") == 0) {
-                args->sort_desc = true; // Сортировка по убыванию
+                args->sort_desc = true; 
             } else {
                 fprintf(stderr, "Error: Invalid sort type. Use 'asc' or 'desc'.\n");
                 exit(1);

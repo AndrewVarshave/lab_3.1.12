@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//Вспомогательная функция для получения элемента стека по индексу
 Publication stack_get(const Stack *stack, int index){
     Node* current = stack->top;
     int current_index = stack->size - 1;
@@ -19,11 +18,10 @@ Publication stack_get(const Stack *stack, int index){
     return emptyPub;
 }
 
-//Вспомогательная функция для замены элементов стека по индексу
 void stack_swap(Stack *stack, int index1, int index2) {
     if (index1 < 0 || index1 >= stack->size || index2 < 0 || index2 >= stack->size) {
         fprintf(stderr, "Error: Index out of bounds in stack_swap.\n");
-        return; // Или можно выйти из программы
+        return;
     }
     
     Node *node1 = stack->top;
@@ -41,7 +39,7 @@ void stack_swap(Stack *stack, int index1, int index2) {
     }
 
 
-    if(node1 == NULL || node2 == NULL) return; //проверка, а надо ли?
+    if(node1 == NULL || node2 == NULL) return;
     Publication tmp = node1->data;
     node1->data = node2->data;
     node2->data = tmp;

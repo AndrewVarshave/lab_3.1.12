@@ -16,7 +16,7 @@ typedef struct {
     int num_records;
     char *input_file;
     char *output_file;
-    bool sort_desc; // Флаг для отслеживания порядка сортировки
+    bool sort_desc;
 } Args;
 
 void parse_args(int argc, char *argv[], Args *args);
